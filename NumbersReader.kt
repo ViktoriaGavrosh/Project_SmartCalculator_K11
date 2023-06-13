@@ -1,6 +1,6 @@
 package calculator
 
-class NumbersReader {
+class NumbersReader(private val info: Info) {
 
     internal fun readNumbers(): List<Double> {
         while (true) {
@@ -18,9 +18,15 @@ class NumbersReader {
         var text: String
         while (true) {
             text = readln()
-            if (text == "/exit") {
-                println("Bye!")
-                throw Exception()
+            when (text) {
+                "/exit" -> {
+                    println("Bye!")
+                    throw Exception()
+                }
+                "/help" -> {
+                    info.printInfo()
+                    continue
+                }
             }
             if (checkString(text)) break
             //println("Wrong input")
@@ -31,14 +37,13 @@ class NumbersReader {
     private fun checkString(text: String) = !(text == "" || Regex("[a-zA-Z]+").containsMatchIn(text))
 
     private fun toListDouble(list: List<String>): List<Double> {
-        if (list.size > 2) throw Exception()
         val listDouble = mutableListOf<Double>()
         for (i in list) listDouble.add(i.toDouble())
         return fixList(listDouble).toList()
     }
 
     private fun fixList(list: MutableList<Double>): MutableList<Double> {
-        if (list.size != 2) list.add(0.0)                     //change, if not +
+        if (list.size < 2) list.add(0.0)                     //change, if not +
         return list
     }
 }
