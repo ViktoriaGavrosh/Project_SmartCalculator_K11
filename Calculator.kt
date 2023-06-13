@@ -11,8 +11,16 @@ class Calculator {
     }
 
     internal fun start() {
-        val listNumbers = reader.readNumbers()
-        val result = Operations.ADDITION.operation.run(listNumbers[0], listNumbers[1])
-        writer.writeResult(result)
+        var listNumbers: List<Double>
+        var result: Double
+        while (true) {
+            try {
+                listNumbers = reader.readNumbers()
+            } catch (e: Exception) {
+                break
+            }
+            result = Operations.ADDITION.operation.run(listNumbers[0], listNumbers[1])
+            writer.writeResult(result)
+        }
     }
 }
