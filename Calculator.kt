@@ -21,7 +21,7 @@ class Calculator {
         while (true) {
             try {
                 listNumbers = reader.readNumbers()
-            } catch (e: Exception) {
+            } catch (e: IllegalArgumentException) {
                 break
             }
             for (i in listNumbers.indices step 2) {           //does not work, if "1 + + 2 "

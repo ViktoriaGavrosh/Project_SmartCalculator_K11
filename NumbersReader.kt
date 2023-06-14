@@ -1,15 +1,19 @@
 package calculator
 
+import java.lang.IllegalArgumentException
+
 class NumbersReader(private val info: Info) {
 
     internal fun readNumbers(): List<String> {
+        var listResult: List<String>
         while (true) {
             val listString = fixSpaces(readFromConsole()).split(" ")
             try {
-                return fixList(listString)
+                listResult = fixList(listString)
             } catch (e: Exception) {
                 continue
             }
+            if (checkToDouble(listResult)) return listResult
         }
     }
 
@@ -22,7 +26,7 @@ class NumbersReader(private val info: Info) {
             when (text) {
                 "/exit" -> {
                     println("Bye!")
-                    throw Exception()
+                    throw IllegalArgumentException()
                 }
                 "/help" -> {
                     info.printInfo()
@@ -30,6 +34,11 @@ class NumbersReader(private val info: Info) {
                 }
             }
             if (checkString(text)) break
+            when {
+                text == "" -> continue
+                text.first() == '/' -> println("Unknown command")
+                else -> println("Invalid expression")
+            }
         }
         return text
     }
@@ -54,10 +63,26 @@ class NumbersReader(private val info: Info) {
 
     private fun changeOperators(list: MutableList<String>): MutableList<String> {
         for (i in 1..list.lastIndex step 2) {
+            if (Regex("[^+-]").containsMatchIn(list[i])) {
+                println("Invalid expression")
+                throw Exception()
+            }
             val j = list[i].replace("--", "+")
             if (j.first() == '+' && j.last() == '-') list[i + 1] = "-${list[i + 1]}"
             list[i] = j[0].toString()
         }
         return list
+    }
+
+    private fun checkToDouble(list: List<String>): Boolean {
+        for (i in list.indices step 2) {
+            try {
+                list[i].toDouble()
+            } catch (e: Exception) {
+                println("Invalid expression")
+                return false
+            }
+        }
+        return true
     }
 }
