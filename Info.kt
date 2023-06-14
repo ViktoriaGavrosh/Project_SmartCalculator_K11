@@ -1,8 +1,10 @@
 package calculator
 
 class Info {
-    private val message = "The program calculates the sum of numbers"
+    private val mes = "The program calculates the sum and the difference of numbers"
+    private val mes2 = "If several identical statements are entered, following one another, the program still should work"
+    private val mes3 = "Two adjacent minus signs turn into a plus (-- -> +)"
     internal fun printInfo() {
-        println(message)
+        println("$mes\n$mes2\n$mes3")
     }
 }

@@ -1,19 +1,22 @@
 package calculator
 
 import calculator.mathOperations.Addition
-import calculator.mathOperations.Runner
+import calculator.mathOperations.Multiplication
+//import calculator.mathOperations.Runner
+import calculator.mathOperations.Subtraction
 
 class Calculator {
     private val info = Info()
     private val reader = NumbersReader(info)
     private val writer = ResultWriter()
 
-    enum class Operations(val operationName: String, val operation: Runner) {
-        ADDITION("+", Addition)
-    }
+    /*enum class Operations(val operationName: String, val operation: Runner) {
+        ADDITION("+", Addition),
+        SUBTRACTION("-", Subtraction)
+    }*/
 
     internal fun start() {
-        var listNumbers: List<Double>
+        var listNumbers: List<String>
         var result = 0.0
         while (true) {
             try {
@@ -21,11 +24,24 @@ class Calculator {
             } catch (e: Exception) {
                 break
             }
-            for (i in listNumbers.indices) {
-                result = Operations.ADDITION.operation.run(result, listNumbers[i])
+            for (i in listNumbers.indices step 2) {           //does not work, if "1 + + 2 "
+                if (i == 0) {
+                    result = listNumbers[i].toDouble()
+                    continue
+                }
+                result = runOperation(result, listNumbers[i].toDouble(), listNumbers[i - 1])
             }
             writer.writeResult(result)
             result = 0.0
         }
+    }
+
+    private fun runOperation(result: Double, num: Double, operation: String): Double {
+        val runner = when(operation) {
+            "+" -> Addition
+            "-" -> Subtraction
+            else -> Multiplication
+        }
+        return runner.run(result, num)
     }
 }
