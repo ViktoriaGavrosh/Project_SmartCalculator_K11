@@ -4,6 +4,7 @@ import calculator.mathOperations.Addition
 import calculator.mathOperations.Multiplication
 //import calculator.mathOperations.Runner
 import calculator.mathOperations.Subtraction
+import calculator.reader.NumbersReader
 
 class Calculator {
     private val info = Info()
@@ -20,7 +21,7 @@ class Calculator {
         var result = 0.0
         while (true) {
             try {
-                listNumbers = reader.readNumbers()
+                listNumbers = reader.read()
             } catch (e: IllegalArgumentException) {
                 break
             }
