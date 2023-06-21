@@ -1,4 +1,4 @@
-package calculator.reader
+package calculator.converter
 
 class Converter {
     private val variables = VariablesMap()

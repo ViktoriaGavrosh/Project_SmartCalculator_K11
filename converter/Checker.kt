@@ -1,4 +1,4 @@
-package calculator.reader
+package calculator.converter
 
 object Checker {
 
@@ -16,7 +16,7 @@ object Checker {
     }
 
     internal fun isValidExpression(list: List<String>): Boolean {
-        if (list.size < 3 || !isValidOperations(list)) {
+        if (list.size < 3 ||!isValidOperations(list)) {
             println("Invalid expression")
             return false
         }
@@ -37,10 +37,9 @@ object Checker {
     }
 
     private fun isValidOperations(list: List<String>): Boolean {
-        for (i in 1..list.lastIndex step 2) {
-            if (Regex("[^+-]").containsMatchIn(list[i])) {
-                return false
-            }
+        for (i in list.indices) {
+            if (i % 2 != 0 && Regex("[^+*/-]").containsMatchIn(list[i])) return false
+            if (i % 2 == 0 && Regex("[+*/]").containsMatchIn(list[i])) return  false
         }
         return true
     }

@@ -1,4 +1,4 @@
-package calculator.reader
+package calculator.converter
 
 class VariablesMap {
     private var map = mutableMapOf<String, String>()
