@@ -1,12 +1,13 @@
 package calculator.mathOperations
 
+import java.math.BigDecimal
+
 object Division : Runner {
-    override fun run(firstNum: Double, secondNum: Double): Double {
-        if (secondNum == 0.0) {
+    override fun run(firstNum: BigDecimal, secondNum: BigDecimal): BigDecimal {
+        if (secondNum == BigDecimal("0.0")) {
             println("Invalid expression")
             throw Exception()
         }
-        val result = firstNum. toInt() / secondNum.toInt()
-        return result.toDouble()
+        return firstNum / secondNum
     }
 }

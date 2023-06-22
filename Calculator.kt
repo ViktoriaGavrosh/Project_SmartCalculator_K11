@@ -6,6 +6,7 @@ import calculator.mathOperations.Division
 import calculator.mathOperations.Multiplication
 //import calculator.mathOperations.Runner
 import calculator.mathOperations.Subtraction
+import java.math.BigDecimal
 
 class Calculator {
     private val info = Info()
@@ -17,7 +18,7 @@ class Calculator {
     }*/
 
     internal fun start() {
-        var result: Double
+        var result: BigDecimal
         while (true) {
             val text = readln()
             try {
@@ -28,7 +29,7 @@ class Calculator {
             } catch (e: Exception) {
                 continue
             }
-            println(result.toInt())
+            println(result.toBigInteger())
         }
     }
 
@@ -52,13 +53,13 @@ class Calculator {
         }
     }
 
-    private fun calculate(text: String): Double {
+    private fun calculate(text: String): BigDecimal {
         if (!isValidBrackets(text)) {
             println("Invalid expression")
             throw Exception()
         }
         var newText = text
-        var result = 0.0
+        var result = BigDecimal("0.0")
         val countOpenBrackets = text.filter { it == '(' }.length
         repeat(countOpenBrackets + 1) {
             val onePart = newText.split("(")
@@ -72,16 +73,16 @@ class Calculator {
 
     private fun isValidBrackets(text: String) = text.filter { it == '(' }.length == text.filter { it == ')' }.length
 
-    private fun calculateExpression(list: List<String>): Double {
+    private fun calculateExpression(list: List<String>): BigDecimal {
         val newList = runPriorityOperations(list)
-        var result = 0.0
+        var result = BigDecimal("0.0")
         for (i in newList.indices step 2) {           //does not work, if "1 + + 2 "
             if (i == 0) {
-                result = newList[i].toDouble()
+                result = newList[i].toBigDecimal()
                 continue
             }
             try {
-                result = runOperation(result, newList[i].toDouble(), newList[i - 1])
+                result = runOperation(result, newList[i].toBigDecimal(), newList[i - 1])
             } catch (e: Exception) {
                 continue
             }
@@ -94,14 +95,14 @@ class Calculator {
         for (i in 1..list.lastIndex step 2) {
             if(list[i] == "*" || list[i] == "/") {
                 mutableList[i] = if (i != 1 && list[i - 2] == "-") "-" else "+"
-                mutableList[i + 1] = runOperation(mutableList[i - 1].toDouble(), list[i + 1].toDouble(), list[i]).toString()
+                mutableList[i + 1] = runOperation(mutableList[i - 1].toBigDecimal(), list[i + 1].toBigDecimal(), list[i]).toString()
                 mutableList[i - 1] = "0"
             }
         }
         return mutableList
     }
 
-    private fun runOperation(result: Double, num: Double, operation: String): Double {
+    private fun runOperation(result: BigDecimal, num: BigDecimal, operation: String): BigDecimal {
         val runner = when(operation) {
             "+" -> Addition
             "-" -> Subtraction

@@ -47,7 +47,7 @@ object Checker {
     private fun isNameValid(name: String) = Regex("[a-zA-Z]+").matches(name)
 
     private fun isValueValid(value: String) = try {
-            value.toDouble()
+            value.toBigDecimal()
             true
         } catch (e: Exception){
             false
