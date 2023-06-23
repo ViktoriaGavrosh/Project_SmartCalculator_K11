@@ -21,5 +21,7 @@ a plus (-- -> +)
 
 Valid user input - only numbers, +, -, *, 
 /, () and two commands:
+
 "/help" - prints information about program
+
 "/exit" - the program stops
