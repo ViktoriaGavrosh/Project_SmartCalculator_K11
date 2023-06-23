@@ -6,7 +6,7 @@ class Info {
         A general expression can contain many parentheses and operations with different priorities
         If several identical statements(+, -) are entered, following one another, the program still work
         Two adjacent minus signs turn into a plus (-- -> +)
-        Valid user input - only numbers, a plus sign, a minus sign, and two commands:
+        Valid user input - only numbers, +, -, *, /, () and two commands:
         "/help" - prints information about program
         "/exit" - the program stops
     """.trimIndent()
